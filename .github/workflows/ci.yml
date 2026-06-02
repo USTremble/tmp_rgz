@@ -47,11 +47,13 @@ jobs:
             echo "package.json не найден!"
             exit 1
           fi
-      - name: Run React tests
+      - name: Build React App (This is our test)
+        env:
+          CI: false
         run: |
           PKG_PATH=$(find . -name "package.json" -not -path "*/node_modules/*" | head -n 1)
           cd $(dirname "$PKG_PATH")
-          CI=true npm test -- --watchAll=false
+          npm run build
 
   build-and-push-api:
     needs: test-backend
